@@ -13,6 +13,8 @@ import java.util.Collections;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import net.imagej.Dataset;
+
 import org.nustaq.serialization.FSTConfiguration;
 import org.scijava.command.CommandService;
 import org.scijava.plugin.Parameter;
@@ -28,7 +30,6 @@ public class FSTRPCServer {
 	private ExecutorService es;
 	private ServerSocket serverSocket;
 	private Thread mainThread;
-
 
 	public void run() {
 		if (es != null) {
@@ -51,6 +52,7 @@ public class FSTRPCServer {
 	private void handleServerSocket() throws IOException {
 		final FSTConfiguration config = FSTConfiguration
 			.createDefaultConfiguration();
+		config.registerSerializer(Dataset.class, new DatasetSerializer(), true);
 		while (!Thread.interrupted()) {
 			try {
 				final Socket s = serverSocket.accept();
@@ -63,35 +65,35 @@ public class FSTRPCServer {
 	}
 
 	private void handleConnection(FSTConfiguration config, Socket s) {
-			try (Socket localS = s) {
-				OutputStream os = localS.getOutputStream();
-				InputStream is = localS.getInputStream();
-				Object obj;
-				while (null != (obj = readObject(config, is))) {
-					if (obj instanceof ClientOfCommandExecutor) {
-						ClientOfCommandExecutor ce = (ClientOfCommandExecutor) obj;
-						ce.setCommandExecutor((commandName, input) -> {
-							try {
-								return commandService.run(commandName, true, input).get()
-									.getOutputs();
-							}
-							catch (InterruptedException exc) {
-								log.warn(exc.getMessage(), exc);
-								Thread.currentThread().interrupt();
-								return Collections.emptyMap();
-							}
-						});
-					}
-
-					Runnable run = (Runnable) obj;
-					run.run();
-					config.encodeToStream(os, run);
-					os.flush();
+		try (Socket localS = s) {
+			OutputStream os = localS.getOutputStream();
+			InputStream is = localS.getInputStream();
+			Object obj;
+			while (null != (obj = readObject(config, is))) {
+				if (obj instanceof ClientOfCommandExecutor) {
+					ClientOfCommandExecutor ce = (ClientOfCommandExecutor) obj;
+					ce.setCommandExecutor((commandName, input) -> {
+						try {
+							return commandService.run(commandName, false, input).get()
+								.getOutputs();
+						}
+						catch (InterruptedException exc) {
+							log.warn(exc.getMessage(), exc);
+							Thread.currentThread().interrupt();
+							return Collections.emptyMap();
+						}
+					});
 				}
+
+				Runnable run = (Runnable) obj;
+				run.run();
+				config.encodeToStream(os, run);
+				os.flush();
 			}
-			catch (Exception exc) {
-				log.error(exc.getMessage(), exc);
-			}
+		}
+		catch (Exception exc) {
+			log.error(exc.getMessage(), exc);
+		}
 	}
 
 	private Object readObject(final FSTConfiguration config, InputStream is)

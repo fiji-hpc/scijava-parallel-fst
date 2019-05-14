@@ -7,6 +7,8 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Map;
 
+import net.imagej.Dataset;
+
 import org.nustaq.serialization.FSTConfiguration;
 
 import cz.it4i.parallel.ParallelWorker;
@@ -22,6 +24,7 @@ public class FSTRPCWorker implements ParallelWorker {
 		this.host = host;
 		this.port = port;
 		config = FSTConfiguration.createDefaultConfiguration();
+		config.registerSerializer(Dataset.class, new DatasetSerializer(), true);
 	}
 
 	@Override
@@ -38,8 +41,7 @@ public class FSTRPCWorker implements ParallelWorker {
 			Map<String, Object> params = (Map<String, Object>) inputs;
 
 
-			CommandRunnable cr = new CommandRunnable(ExampleCommand.class
-				.getCanonicalName(), params);
+			CommandRunnable cr = new CommandRunnable(commandTypeName, params);
 			config.encodeToStream(os, cr);
 
 			os.flush();
