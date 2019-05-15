@@ -1,6 +1,9 @@
 
 package cz.it4i.parallel.fst;
 
+import io.scif.services.DatasetIOService;
+import io.scif.services.LocationService;
+
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,6 +30,13 @@ public class FSTRPCServer {
 
 	@Parameter
 	private CommandService commandService;
+
+	@Parameter
+	private DatasetIOService ioService;
+
+	@Parameter
+	private LocationService locationService;
+
 	private ExecutorService es;
 	private ServerSocket serverSocket;
 	private Thread mainThread;
@@ -52,7 +62,8 @@ public class FSTRPCServer {
 	private void handleServerSocket() throws IOException {
 		final FSTConfiguration config = FSTConfiguration
 			.createDefaultConfiguration();
-		config.registerSerializer(Dataset.class, new DatasetSerializer(), true);
+		config.registerSerializer(Dataset.class, new DatasetSerializer(ioService,
+			locationService), true);
 		while (!Thread.interrupted()) {
 			try {
 				final Socket s = serverSocket.accept();

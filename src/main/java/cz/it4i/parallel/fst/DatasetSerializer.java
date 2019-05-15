@@ -1,29 +1,33 @@
 package cz.it4i.parallel.fst;
 
+import io.scif.io.ByteArrayHandle;
+import io.scif.services.DatasetIOService;
+import io.scif.services.LocationService;
+
 import java.io.IOException;
+import java.util.UUID;
 
 import net.imagej.Dataset;
-import net.imagej.DefaultDataset;
-import net.imagej.ImgPlus;
-import net.imglib2.type.numeric.RealType;
 
 import org.nustaq.serialization.FSTClazzInfo;
 import org.nustaq.serialization.FSTClazzInfo.FSTFieldInfo;
 import org.nustaq.serialization.FSTObjectInput;
 import org.nustaq.serialization.FSTObjectOutput;
 import org.nustaq.serialization.FSTObjectSerializer;
-import org.scijava.Context;
-
-import de.mpicbg.ulman.imgstreamer.ImgStreamer;
 
 
 public class DatasetSerializer implements FSTObjectSerializer {
 
 
-	private Context ctx;
+	private static final int SIZE_OF_CHUNK = 1024 * 1024 * 1024;
+	private LocationService locationService;
+	private DatasetIOService ioService;
 
-	public DatasetSerializer() {
-		ctx = new Context();
+	public DatasetSerializer(DatasetIOService ioService,
+		LocationService locationService)
+	{
+		this.ioService = ioService;
+		this.locationService = locationService;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -32,19 +36,28 @@ public class DatasetSerializer implements FSTObjectSerializer {
 		FSTClazzInfo clzInfo, FSTFieldInfo referencedBy, int streamPosition)
 		throws IOException
 	{
-		ImgStreamer imgStreamer = new ImgStreamer(null);
-		Dataset ds = (Dataset) toWrite;
-		@SuppressWarnings("rawtypes")
-		ImgPlus ip = ds.getImgPlus();
-		imgStreamer.setImageForStreaming(ip);
-		imgStreamer.write(new OutputStreamObjectOutput(out));
+		Dataset dataset = (Dataset) toWrite;
+		out.writeUTF(dataset.getName());
+		String id = UUID.randomUUID().toString() + "_" + dataset.getName();
+		ByteArrayHandle bh = new ByteArrayHandle();
+		locationService.mapFile(id, bh);
+		ioService.save(dataset, id);
+		int pointer = 0;
+		byte[] data = bh.getBytes();
+		int count = (int) bh.length();
+		out.writeInt(count);
+		while (pointer < bh.length()) {
+			int toRead = (int) Math.min(SIZE_OF_CHUNK, bh.length() - pointer);
+			out.write(data, pointer, toRead);
+			pointer += toRead;
+		}
+		bh.close();
 	}
 
 	@Override
 	public void readObject(FSTObjectInput in, Object toRead, FSTClazzInfo clzInfo,
 		FSTFieldInfo referencedBy) throws Exception
 	{
-		// TODO Auto-generated method stub
 
 	}
 
@@ -55,19 +68,24 @@ public class DatasetSerializer implements FSTObjectSerializer {
 
 	@Override
 	public boolean alwaysCopy() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Object instantiate(Class objectClass, FSTObjectInput fstObjectInput,
 		FSTClazzInfo serializationInfo, FSTFieldInfo referencee, int streamPosition)
 		throws Exception
 	{
-		ImgStreamer imgStreamer = new ImgStreamer(null);
-		ImgPlus<? extends RealType<?>> ip = imgStreamer.readAsRealTypedImg(
-			new InputStreamObjectInput(fstObjectInput));
-		return new DefaultDataset(ctx, ip);
+		String name = fstObjectInput.readStringUTF();
+		String id = UUID.randomUUID().toString() + "_" + name;
+		int count = fstObjectInput.readInt();
+		ByteArrayHandle bh = new ByteArrayHandle(count);
+		locationService.mapFile(id, bh);
+		fstObjectInput.read(bh.getBytes(), 0, count);
+		Dataset result = ioService.open(id);
+		bh.close();
+		return result;
 	}
 
 }

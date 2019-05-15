@@ -1,11 +1,16 @@
 package cz.it4i.parallel.fst;
 
+import io.scif.services.DatasetIOService;
+import io.scif.services.LocationService;
+
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.scijava.command.CommandService;
 import org.scijava.parallel.ParallelizationParadigm;
+import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 
 import cz.it4i.parallel.ImageJServerParadigm.Host;
@@ -14,6 +19,12 @@ import cz.it4i.parallel.SimpleOstravaParadigm;
 
 @Plugin(type = ParallelizationParadigm.class)
 public class FSTRPCParadigm extends SimpleOstravaParadigm {
+
+	@Parameter
+	private DatasetIOService ioService;
+
+	@Parameter
+	private LocationService locationService;
 
 	private List<String> hosts = new LinkedList<>();
 
@@ -39,7 +50,7 @@ public class FSTRPCParadigm extends SimpleOstravaParadigm {
 		final String[] tokensOfHost = host.split(":");
 		int port = Integer.parseInt(tokensOfHost[1]);
 		host = tokensOfHost[0];
-		return new FSTRPCWorker(host, port);
+		return new FSTRPCWorker(host, port, ioService, locationService);
 	}
 
 }
