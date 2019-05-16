@@ -8,7 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.scijava.command.CommandService;
 import org.scijava.parallel.ParallelizationParadigm;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;

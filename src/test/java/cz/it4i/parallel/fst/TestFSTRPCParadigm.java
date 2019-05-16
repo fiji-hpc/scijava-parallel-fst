@@ -8,8 +8,8 @@ import org.scijava.parallel.ParallelService;
 import org.scijava.parallel.ParallelizationParadigm;
 import org.scijava.parallel.ParallelizationParadigmProfile;
 
-import cz.it4i.parallel.ImageJServerParadigm;
 import cz.it4i.parallel.ServerRunner;
+import cz.it4i.parallel.ImageJServerParadigm;
 import cz.it4i.parallel.ImageJServerParadigm.Host;
 
 public class TestFSTRPCParadigm {

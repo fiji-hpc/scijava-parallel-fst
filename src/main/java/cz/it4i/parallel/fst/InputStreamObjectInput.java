@@ -1,12 +1,8 @@
 package cz.it4i.parallel.fst;
 
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInput;
-import java.io.OutputStream;
 
 
 public class InputStreamObjectInput extends InputStream {

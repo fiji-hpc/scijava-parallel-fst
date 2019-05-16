@@ -33,8 +33,14 @@ public class InProcessFSTRPCServerRunner implements ServerRunner {
 	}
 
 	@Override
-	public void close() {
+	public void shutdown() {
 		server.stop();
+
+	}
+
+	@Override
+	public void close() {
+		shutdown();
 	}
 
 

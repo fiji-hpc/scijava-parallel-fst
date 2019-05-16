@@ -30,7 +30,6 @@ public class DatasetSerializer implements FSTObjectSerializer {
 		this.locationService = locationService;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void writeObject(FSTObjectOutput out, Object toWrite,
 		FSTClazzInfo clzInfo, FSTFieldInfo referencedBy, int streamPosition)
@@ -62,7 +61,7 @@ public class DatasetSerializer implements FSTObjectSerializer {
 	}
 
 	@Override
-	public boolean willHandleClass(Class cl) {
+	public boolean willHandleClass(@SuppressWarnings("rawtypes") Class cl) {
 		return true;
 	}
 
