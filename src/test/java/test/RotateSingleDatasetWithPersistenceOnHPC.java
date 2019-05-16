@@ -15,25 +15,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
 
 import net.imagej.Dataset;
 import net.imagej.ImageJ;
 import net.imagej.plugins.commands.imglib.RotateImageXY;
 
 import org.scijava.Context;
-import org.scijava.parallel.ParallelizationParadigm;
 import org.scijava.parallel.PersistentParallelizationParadigm;
 import org.scijava.parallel.PersistentParallelizationParadigm.CompletableFutureID;
 import org.scijava.ui.UIService;
 
 import cz.it4i.parallel.HPCImageJServerRunner;
 import cz.it4i.parallel.HPCSettings;
-import cz.it4i.parallel.ImageJServerParadigm.Host;
 import cz.it4i.parallel.fst.TestFSTRPCParadigm;
 import cz.it4i.parallel.fst.runners.HPCFSTRPCServerRunnerUI;
-import cz.it4i.parallel.persistence.PersistentParallelizationParadigmImpl;
 import cz.it4i.parallel.ui.HPCSettingsGui;
+import cz.it4i.parallel.utils.TestParadigmPersistent;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -125,14 +122,8 @@ public class RotateSingleDatasetWithPersistenceOnHPC
 				finalHpcSettings.setJobID(this.getJob().getID());
 			}
 		};
-		ParallelizationParadigm paradigm = TestFSTRPCParadigm.runner(runner,
-			context);
-		List<String> hosts = runner.getJob().getNodes();
-		Integer cores = runner.getNCores();
-
-		return PersistentParallelizationParadigmImpl.addPersistencyToParadigm(paradigm
-			, hosts.stream().map(h -> h + ":9090").map(n -> new Host(n, cores))
-				.collect(Collectors.toList()));
+		return TestParadigmPersistent.addPersistency(TestFSTRPCParadigm.runner(runner,
+			context), runner);
 
 	}
 
