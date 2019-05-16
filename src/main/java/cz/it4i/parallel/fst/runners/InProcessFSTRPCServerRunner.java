@@ -1,3 +1,4 @@
+
 package cz.it4i.parallel.fst.runners;
 
 import java.util.Collections;
@@ -8,19 +9,18 @@ import org.scijava.Context;
 import cz.it4i.parallel.ServerRunner;
 import cz.it4i.parallel.fst.server.FSTRPCServer;
 
-
 public class InProcessFSTRPCServerRunner implements ServerRunner {
 
 	private FSTRPCServer server;
 
 	public InProcessFSTRPCServerRunner(Context ctx) {
 		server = new FSTRPCServer(ctx);
-		ctx.inject(server);
 	}
 
 	@Override
 	public void start() {
 		server.run();
+		getPorts().parallelStream().forEach(Wait4FSTRPCServer::doIi);
 	}
 
 	@Override
@@ -43,6 +43,7 @@ public class InProcessFSTRPCServerRunner implements ServerRunner {
 	public void close() {
 		shutdown();
 	}
+
 
 
 }

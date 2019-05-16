@@ -8,13 +8,28 @@ import org.scijava.parallel.ParallelService;
 import org.scijava.parallel.ParallelizationParadigm;
 import org.scijava.parallel.ParallelizationParadigmProfile;
 
-import cz.it4i.parallel.ServerRunner;
 import cz.it4i.parallel.ImageJServerParadigm;
 import cz.it4i.parallel.ImageJServerParadigm.Host;
+import cz.it4i.parallel.ServerRunner;
+import cz.it4i.parallel.fst.runners.FSTRPCServerRunner;
+import cz.it4i.parallel.fst.runners.InProcessFSTRPCServerRunner;
+import cz.it4i.parallel.utils.TestParadigm;
 
 public class TestFSTRPCParadigm {
 
-	public static ParallelizationParadigm initParadigm(ServerRunner runner,
+	public static ParallelizationParadigm localFSTRPCServer(String fijiPath,
+		Context context)
+	{
+		ServerRunner runner = new FSTRPCServerRunner(fijiPath, true);
+		return new TestParadigm(runner, initParadigm(runner, context));
+	}
+
+	public static ParallelizationParadigm inProcessFSTRPCServer(Context context) {
+		ServerRunner runner = new InProcessFSTRPCServerRunner(context);
+		return new TestParadigm(runner, initParadigm(runner, context));
+	}
+
+	private static ParallelizationParadigm initParadigm(ServerRunner runner,
 		Context context)
 	{
 		runner.start();

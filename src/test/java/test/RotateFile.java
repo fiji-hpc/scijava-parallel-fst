@@ -22,11 +22,8 @@ import org.scijava.Context;
 import org.scijava.parallel.ParallelizationParadigm;
 
 import cz.it4i.parallel.Routines;
-import cz.it4i.parallel.ServerRunner;
 import cz.it4i.parallel.fst.ExampleImage;
 import cz.it4i.parallel.fst.TestFSTRPCParadigm;
-import cz.it4i.parallel.fst.runners.InProcessFSTRPCServerRunner;
-import cz.it4i.parallel.utils.TestParadigm;
 
 public class RotateFile {
 
@@ -39,9 +36,10 @@ public class RotateFile {
 	public static void main(String[] args) throws IOException {
 		final Context context = new Context();
 		ioService = context.service(DatasetIOService.class);
-		ServerRunner runner = new InProcessFSTRPCServerRunner(context);
-		try (ParallelizationParadigm paradigm = new TestParadigm(runner,
-			TestFSTRPCParadigm.initParadigm(runner, context)))
+		try (ParallelizationParadigm paradigm = TestFSTRPCParadigm
+			.localFSTRPCServer(
+				"/home/koz01/Work/vyzkumnik/fiji/apps/Fiji.app-devel/fiji-linux64",
+				context))
 		{
 			callRemotePlugin(paradigm);
 		}
