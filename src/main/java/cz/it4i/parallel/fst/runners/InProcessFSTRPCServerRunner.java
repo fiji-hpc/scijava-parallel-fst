@@ -1,4 +1,4 @@
-package cz.it4i.parallel.fst;
+package cz.it4i.parallel.fst.runners;
 
 import java.util.Collections;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import org.scijava.Context;
 
 import cz.it4i.parallel.ServerRunner;
+import cz.it4i.parallel.fst.server.FSTRPCServer;
 
 
 public class InProcessFSTRPCServerRunner implements ServerRunner {
@@ -13,7 +14,7 @@ public class InProcessFSTRPCServerRunner implements ServerRunner {
 	private FSTRPCServer server;
 
 	public InProcessFSTRPCServerRunner(Context ctx) {
-		server = new FSTRPCServer();
+		server = new FSTRPCServer(ctx);
 		ctx.inject(server);
 	}
 

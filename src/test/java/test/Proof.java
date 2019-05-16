@@ -29,8 +29,8 @@ import org.scijava.parallel.ParallelizationParadigm;
 import cz.it4i.parallel.Routines;
 import cz.it4i.parallel.ServerRunner;
 import cz.it4i.parallel.fst.ExampleImage;
-import cz.it4i.parallel.fst.InProcessFSTRPCServerRunner;
 import cz.it4i.parallel.fst.TestFSTRPCParadigm;
+import cz.it4i.parallel.fst.runners.InProcessFSTRPCServerRunner;
 import cz.it4i.parallel.utils.TestParadigm;
 import de.mpicbg.ulman.imgstreamer.ImgStreamer;
 

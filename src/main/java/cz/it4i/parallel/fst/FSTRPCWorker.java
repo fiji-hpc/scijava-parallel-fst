@@ -15,6 +15,7 @@ import net.imagej.Dataset;
 import org.nustaq.serialization.FSTConfiguration;
 
 import cz.it4i.parallel.ParallelWorker;
+import cz.it4i.parallel.fst.server.CommandRunnable;
 
 
 public class FSTRPCWorker implements ParallelWorker {

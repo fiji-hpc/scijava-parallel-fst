@@ -1,5 +1,5 @@
 
-package cz.it4i.parallel.fst;
+package cz.it4i.parallel.fst.server;
 
 import io.scif.services.DatasetIOService;
 import io.scif.services.LocationService;
@@ -19,10 +19,12 @@ import java.util.concurrent.Executors;
 import net.imagej.Dataset;
 
 import org.nustaq.serialization.FSTConfiguration;
+import org.scijava.Context;
 import org.scijava.command.CommandService;
 import org.scijava.plugin.Parameter;
 
 import cz.it4i.parallel.Routines;
+import cz.it4i.parallel.fst.DatasetSerializer;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -41,22 +43,33 @@ public class FSTRPCServer {
 	private ServerSocket serverSocket;
 	private Thread mainThread;
 
+	public FSTRPCServer(Context ctx) {
+		ctx.inject(this);
+	}
+
 	public void run() {
 		if (es != null) {
 			return;
 		}
+		log.info("Starting FSTRPC server");
 		es = Executors.newCachedThreadPool();
 		serverSocket = Routines.supplyWithExceptionHandling(() -> new ServerSocket(
 			9090));
 		mainThread = new Thread(() -> Routines.runWithExceptionHandling(
 			this::handleServerSocket));
 		mainThread.start();
+		log.info("FSTRPC server started");
 	}
 
 	public void stop() {
 		mainThread.interrupt();
 		es.shutdown();
 		Routines.runWithExceptionHandling(() -> serverSocket.close());
+		log.info("FSTRPC server stopped");
+	}
+
+	public void join() throws InterruptedException {
+		mainThread.join();
 	}
 
 	private void handleServerSocket() throws IOException {

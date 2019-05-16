@@ -1,4 +1,4 @@
-package cz.it4i.parallel.fst;
+package cz.it4i.parallel.fst.server;
 
 
 public interface ClientOfCommandExecutor {
