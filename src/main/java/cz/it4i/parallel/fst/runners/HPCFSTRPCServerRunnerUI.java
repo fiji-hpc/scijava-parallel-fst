@@ -2,26 +2,21 @@
 package cz.it4i.parallel.fst.runners;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
-import cz.it4i.parallel.ImageJServerRunner;
+import cz.it4i.parallel.HPCSettings;
+import cz.it4i.parallel.ui.HPCImageJServerRunnerWithUI;
 
-public class FSTRPCServerRunner extends ImageJServerRunner {
+public class HPCFSTRPCServerRunnerUI extends HPCImageJServerRunnerWithUI {
+
+	public HPCFSTRPCServerRunnerUI(HPCSettings settings, boolean shutdownOnClose) {
+		super(settings, shutdownOnClose);
+	}
 
 	static final List<String> FSTPRPC_SERVER_PARAMETERS = Arrays.asList(
 		"-Dimagej.legacy.modernOnlyCommands=true", "--", "--ij2", "--headless",
 		"--fstrpcserver");
 
-	public FSTRPCServerRunner(String fiji, boolean shutdownOnClose) {
-		super(fiji, shutdownOnClose);
-	}
-
-
-	@Override
-	public List<Integer> getPorts() {
-		return Collections.singletonList(9090);
-	}
 
 	@Override
 	protected List<String> getParameters() {
@@ -31,6 +26,11 @@ public class FSTRPCServerRunner extends ImageJServerRunner {
 	@Override
 	protected void waitForImageJServer(Integer port) {
 		Wait4FSTRPCServer.doIi(port);
+	}
+
+	@Override
+	protected int getStartPort() {
+		return 9090;
 	}
 
 }

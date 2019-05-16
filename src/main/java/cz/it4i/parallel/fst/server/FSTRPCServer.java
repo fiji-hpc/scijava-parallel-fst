@@ -111,8 +111,18 @@ public class FSTRPCServer {
 
 				Runnable run = (Runnable) obj;
 				run.run();
-				config.encodeToStream(os, run);
-				os.flush();
+				try {
+					config.encodeToStream(os, run);
+					os.flush();
+				}
+				catch (SocketException exc) {
+					if (exc.getMessage().contains("Broken pipe")) {
+						log.info("connection closed");
+					}
+					else {
+						throw exc;
+					}
+				}
 			}
 		}
 		catch (Exception exc) {

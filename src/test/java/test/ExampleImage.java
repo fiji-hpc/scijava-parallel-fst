@@ -1,4 +1,4 @@
-package cz.it4i.parallel.fst;
+package test;
 
 
 import static cz.it4i.parallel.Routines.getSuffix;

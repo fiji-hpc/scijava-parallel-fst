@@ -16,13 +16,13 @@ import java.util.List;
 import java.util.Map;
 
 import net.imagej.Dataset;
+import net.imagej.ImageJ;
 import net.imagej.plugins.commands.imglib.RotateImageXY;
 
 import org.scijava.Context;
 import org.scijava.parallel.ParallelizationParadigm;
 
 import cz.it4i.parallel.Routines;
-import cz.it4i.parallel.fst.ExampleImage;
 import cz.it4i.parallel.fst.TestFSTRPCParadigm;
 
 public class RotateFile {
@@ -34,15 +34,17 @@ public class RotateFile {
 	private static DatasetIOService ioService;
 
 	public static void main(String[] args) throws IOException {
-		final Context context = new Context();
+		ImageJ ij = new ImageJ();
+		final Context context = ij.context();
+		ij.ui().showUI();
 		ioService = context.service(DatasetIOService.class);
 		try (ParallelizationParadigm paradigm = TestFSTRPCParadigm
-			.localFSTRPCServer(
-				"/home/koz01/Work/vyzkumnik/fiji/apps/Fiji.app-devel/fiji-linux64",
-				context))
+			.hpcFSTRPCServer(context))
 		{
 			callRemotePlugin(paradigm);
 		}
+		context.dispose();
+		System.exit(0);
 	}
 
 	static void callRemotePlugin(final ParallelizationParadigm paradigm)
