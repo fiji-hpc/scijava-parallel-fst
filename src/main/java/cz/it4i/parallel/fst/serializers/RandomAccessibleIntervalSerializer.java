@@ -23,7 +23,7 @@ public class RandomAccessibleIntervalSerializer implements
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void writeObject(ObjectOutput out, Object toWrite)
+	public void writeObject(Object toWrite, ObjectOutput out)
 		throws IOException
 	{
 		RandomAccessibleIntervalStreamer.write(

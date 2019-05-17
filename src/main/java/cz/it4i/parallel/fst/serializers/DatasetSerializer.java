@@ -29,7 +29,7 @@ public class DatasetSerializer implements ParallelizationParadigmSerializer {
 	private DatasetIOService ioService;
 
 	@Override
-	public void writeObject(ObjectOutput out, Object toWrite)
+	public void writeObject(Object toWrite, ObjectOutput out)
 		throws IOException
 	{
 		Dataset dataset = (Dataset) toWrite;

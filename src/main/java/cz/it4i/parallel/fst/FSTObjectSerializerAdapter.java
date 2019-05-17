@@ -20,7 +20,7 @@ public class FSTObjectSerializerAdapter implements FSTObjectSerializer {
 		FSTClazzInfo clzInfo, FSTFieldInfo referencedBy, int streamPosition)
 		throws IOException
 	{
-		serializer.writeObject(out, toWrite);
+		serializer.writeObject(toWrite, out);
 	}
 
 	@Override

@@ -9,7 +9,7 @@ import org.scijava.plugin.SciJavaPlugin;
 
 public interface ParallelizationParadigmSerializer extends SciJavaPlugin {
 
-	void writeObject(ObjectOutput output, Object obj) throws IOException;
+	void writeObject(Object obj, ObjectOutput output) throws IOException;
 
 	Object readObject(Class<?> objectClass, ObjectInput input) throws Exception;
 
