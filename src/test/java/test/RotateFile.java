@@ -39,7 +39,7 @@ public class RotateFile {
 		ij.ui().showUI();
 		ioService = context.service(DatasetIOService.class);
 		try (ParallelizationParadigm paradigm = TestFSTRPCParadigm
-			.hpcFSTRPCServer(context))
+			.inProcessFSTRPCServer(context))
 		{
 			callRemotePlugin(paradigm);
 		}

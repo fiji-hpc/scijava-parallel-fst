@@ -8,9 +8,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.nustaq.serialization.FSTConfiguration;
+import org.scijava.Context;
 import org.scijava.parallel.ParallelizationParadigm;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
+import org.scijava.plugin.PluginService;
 
 import cz.it4i.parallel.ImageJServerParadigm.Host;
 import cz.it4i.parallel.ParallelWorker;
@@ -24,6 +27,12 @@ public class FSTRPCParadigm extends SimpleOstravaParadigm {
 
 	@Parameter
 	private LocationService locationService;
+
+	@Parameter
+	private PluginService pluginService;
+
+	@Parameter
+	private Context context;
 
 	private List<String> hosts = new LinkedList<>();
 
@@ -49,7 +58,27 @@ public class FSTRPCParadigm extends SimpleOstravaParadigm {
 		final String[] tokensOfHost = host.split(":");
 		int port = Integer.parseInt(tokensOfHost[1]);
 		host = tokensOfHost[0];
-		return new FSTRPCWorker(host, port, ioService, locationService);
+		FSTConfiguration config = createConfigWithRegisteredSerializers(
+			pluginService);
+		
+		return new FSTRPCWorker(host, port, config);
+	}
+
+	public static FSTConfiguration createConfigWithRegisteredSerializers(
+		PluginService pluginService)
+	{
+		FSTConfiguration config = FSTConfiguration.createDefaultConfiguration();
+		pluginService.createInstancesOfType(ParallelizationParadigmSerializer.class)
+			.stream().forEach(s -> register(s, config));
+		return config;
+	}
+
+	private static void register(ParallelizationParadigmSerializer s,
+		FSTConfiguration config)
+	{
+		config.registerSerializer(s.getSerializedClass(),
+			new FSTObjectSerializerAdapter(s), s
+			.alsoForAllSubclasses());
 	}
 
 }

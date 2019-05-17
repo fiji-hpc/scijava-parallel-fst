@@ -1,8 +1,7 @@
 
 package cz.it4i.parallel.fst.server;
 
-import io.scif.services.DatasetIOService;
-import io.scif.services.LocationService;
+import static cz.it4i.parallel.fst.FSTRPCParadigm.createConfigWithRegisteredSerializers;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -16,15 +15,13 @@ import java.util.Collections;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import net.imagej.Dataset;
-
 import org.nustaq.serialization.FSTConfiguration;
 import org.scijava.Context;
 import org.scijava.command.CommandService;
 import org.scijava.plugin.Parameter;
+import org.scijava.plugin.PluginService;
 
 import cz.it4i.parallel.Routines;
-import cz.it4i.parallel.fst.DatasetSerializer;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -34,10 +31,10 @@ public class FSTRPCServer {
 	private CommandService commandService;
 
 	@Parameter
-	private DatasetIOService ioService;
+	private PluginService pluginService;
 
 	@Parameter
-	private LocationService locationService;
+	private Context context;
 
 	private ExecutorService es;
 	private ServerSocket serverSocket;
@@ -73,10 +70,8 @@ public class FSTRPCServer {
 	}
 
 	private void handleServerSocket() throws IOException {
-		final FSTConfiguration config = FSTConfiguration
-			.createDefaultConfiguration();
-		config.registerSerializer(Dataset.class, new DatasetSerializer(ioService,
-			locationService), true);
+		final FSTConfiguration config = createConfigWithRegisteredSerializers(
+			pluginService);
 		while (!Thread.interrupted()) {
 			try {
 				final Socket s = serverSocket.accept();

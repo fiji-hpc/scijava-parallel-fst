@@ -5,34 +5,29 @@ import io.scif.services.DatasetIOService;
 import io.scif.services.LocationService;
 
 import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.util.UUID;
 
 import net.imagej.Dataset;
 
-import org.nustaq.serialization.FSTClazzInfo;
-import org.nustaq.serialization.FSTClazzInfo.FSTFieldInfo;
-import org.nustaq.serialization.FSTObjectInput;
-import org.nustaq.serialization.FSTObjectOutput;
-import org.nustaq.serialization.FSTObjectSerializer;
+import org.scijava.plugin.Parameter;
+import org.scijava.plugin.Plugin;
 
-
-public class DatasetSerializer implements FSTObjectSerializer {
+@Plugin(type = ParallelizationParadigmSerializer.class)
+public class DatasetSerializer implements ParallelizationParadigmSerializer {
 
 
 	private static final int SIZE_OF_CHUNK = 1024 * 1024 * 1024;
+
+	@Parameter
 	private LocationService locationService;
+
+	@Parameter
 	private DatasetIOService ioService;
 
-	public DatasetSerializer(DatasetIOService ioService,
-		LocationService locationService)
-	{
-		this.ioService = ioService;
-		this.locationService = locationService;
-	}
-
 	@Override
-	public void writeObject(FSTObjectOutput out, Object toWrite,
-		FSTClazzInfo clzInfo, FSTFieldInfo referencedBy, int streamPosition)
+	public void writeObject(ObjectOutput out, Object toWrite)
 		throws IOException
 	{
 		Dataset dataset = (Dataset) toWrite;
@@ -54,37 +49,33 @@ public class DatasetSerializer implements FSTObjectSerializer {
 	}
 
 	@Override
-	public void readObject(FSTObjectInput in, Object toRead, FSTClazzInfo clzInfo,
-		FSTFieldInfo referencedBy) throws Exception
-	{
-
-	}
-
-	@Override
-	public boolean willHandleClass(@SuppressWarnings("rawtypes") Class cl) {
+	public boolean willHandleClass(Class<?> cl) {
 		return true;
 	}
 
 	@Override
-	public boolean alwaysCopy() {
-		return false;
-	}
-
-	@SuppressWarnings("rawtypes")
-	@Override
-	public Object instantiate(Class objectClass, FSTObjectInput fstObjectInput,
-		FSTClazzInfo serializationInfo, FSTFieldInfo referencee, int streamPosition)
+	public Object readObject(Class<?> objectClass, ObjectInput objectInput)
 		throws Exception
 	{
-		String name = fstObjectInput.readStringUTF();
+		String name = objectInput.readUTF();
 		String id = UUID.randomUUID().toString() + "_" + name;
-		int count = fstObjectInput.readInt();
+		int count = objectInput.readInt();
 		ByteArrayHandle bh = new ByteArrayHandle(count);
 		locationService.mapFile(id, bh);
-		fstObjectInput.read(bh.getBytes(), 0, count);
+		objectInput.read(bh.getBytes(), 0, count);
 		Dataset result = ioService.open(id);
 		bh.close();
 		return result;
+	}
+
+	@Override
+	public Class<?> getSerializedClass() {
+		return Dataset.class;
+	}
+
+	@Override
+	public boolean alsoForAllSubclasses() {
+		return true;
 	}
 
 }

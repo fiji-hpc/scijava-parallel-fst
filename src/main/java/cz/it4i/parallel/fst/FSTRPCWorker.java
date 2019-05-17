@@ -2,15 +2,10 @@ package cz.it4i.parallel.fst;
 
 import static cz.it4i.parallel.Routines.rethrowAsUnchecked;
 
-import io.scif.services.DatasetIOService;
-import io.scif.services.LocationService;
-
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Map;
-
-import net.imagej.Dataset;
 
 import org.nustaq.serialization.FSTConfiguration;
 
@@ -24,14 +19,11 @@ public class FSTRPCWorker implements ParallelWorker {
 	private int port;
 	private FSTConfiguration config;
 
-	public FSTRPCWorker(String host, int port, DatasetIOService ioService,
-		LocationService locationService)
+	public FSTRPCWorker(String host, int port, FSTConfiguration config)
 	{
 		this.host = host;
 		this.port = port;
-		config = FSTConfiguration.createDefaultConfiguration();
-		config.registerSerializer(Dataset.class, new DatasetSerializer(ioService,
-			locationService), true);
+		this.config = config;
 	}
 
 	@Override
