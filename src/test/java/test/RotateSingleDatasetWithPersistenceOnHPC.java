@@ -29,8 +29,8 @@ import cz.it4i.parallel.HPCImageJServerRunner;
 import cz.it4i.parallel.HPCSettings;
 import cz.it4i.parallel.fst.TestFSTRPCParadigm;
 import cz.it4i.parallel.fst.runners.HPCFSTRPCServerRunnerUI;
+import cz.it4i.parallel.persistence.PersistentParallelizationParadigmImpl;
 import cz.it4i.parallel.ui.HPCSettingsGui;
-import cz.it4i.parallel.utils.TestParadigmPersistent;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -122,8 +122,8 @@ public class RotateSingleDatasetWithPersistenceOnHPC
 				finalHpcSettings.setJobID(this.getJob().getID());
 			}
 		};
-		return TestParadigmPersistent.addPersistency(TestFSTRPCParadigm.runner(runner,
-			context), runner);
+		return PersistentParallelizationParadigmImpl.addPersistencyToParadigm(
+			TestFSTRPCParadigm.runner(runner, context), runner);
 
 	}
 

@@ -29,8 +29,9 @@ public class InProcessFSTRPCServerRunner implements ServerRunner {
 	}
 
 	@Override
-	public int getNCores() {
-		return Runtime.getRuntime().availableProcessors();
+	public List<Integer> getNCores() {
+		return Collections.singletonList(Runtime.getRuntime()
+			.availableProcessors());
 	}
 
 	@Override
