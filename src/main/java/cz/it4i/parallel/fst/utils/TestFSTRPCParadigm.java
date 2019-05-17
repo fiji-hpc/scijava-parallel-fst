@@ -1,4 +1,4 @@
-package cz.it4i.parallel.fst;
+package cz.it4i.parallel.fst.utils;
 
 import com.google.common.collect.Streams;
 
@@ -13,6 +13,7 @@ import org.scijava.parallel.ParallelizationParadigmProfile;
 import cz.it4i.parallel.ImageJServerParadigm;
 import cz.it4i.parallel.ImageJServerParadigm.Host;
 import cz.it4i.parallel.ServerRunner;
+import cz.it4i.parallel.fst.FSTRPCParadigm;
 import cz.it4i.parallel.fst.runners.FSTRPCServerRunner;
 import cz.it4i.parallel.fst.runners.HPCFSTRPCServerRunnerUI;
 import cz.it4i.parallel.fst.runners.InProcessFSTRPCServerRunner;
@@ -24,7 +25,7 @@ public class TestFSTRPCParadigm {
 	public static ParallelizationParadigm runner(ServerRunner runner,
 		Context context)
 	{
-		return new TestParadigm(runner, initParadigm(runner, context));
+		return new RemoteTestParadigm(runner, initParadigm(runner, context));
 	}
 
 	public static ParallelizationParadigm hpcFSTRPCServer(
@@ -32,7 +33,7 @@ public class TestFSTRPCParadigm {
 	{
 		ServerRunner runner = new HPCFSTRPCServerRunnerUI(HPCSettingsGui.showDialog(
 			context), true);
-		return new TestParadigm(runner, initParadigm(runner, context));
+		return new RemoteTestParadigm(runner, initParadigm(runner, context));
 	}
 
 	public static ParallelizationParadigm inProcessFSTRPCServer(Context context) {
