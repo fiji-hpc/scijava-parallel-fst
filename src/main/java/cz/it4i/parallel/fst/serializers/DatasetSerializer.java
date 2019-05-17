@@ -1,4 +1,4 @@
-package cz.it4i.parallel.fst;
+package cz.it4i.parallel.fst.serializers;
 
 import io.scif.io.ByteArrayHandle;
 import io.scif.services.DatasetIOService;
@@ -13,6 +13,8 @@ import net.imagej.Dataset;
 
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
+
+import cz.it4i.parallel.fst.ParallelizationParadigmSerializer;
 
 @Plugin(type = ParallelizationParadigmSerializer.class)
 public class DatasetSerializer implements ParallelizationParadigmSerializer {
