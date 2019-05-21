@@ -16,11 +16,14 @@ import org.scijava.plugin.Plugin;
 import org.scijava.plugin.PluginService;
 
 import cz.it4i.parallel.ImageJServerParadigm.Host;
+import cz.it4i.parallel.MultipleHostParadigm;
 import cz.it4i.parallel.ParallelWorker;
 import cz.it4i.parallel.SimpleOstravaParadigm;
 
 @Plugin(type = ParallelizationParadigm.class)
-public class FSTRPCParadigm extends SimpleOstravaParadigm {
+public class FSTRPCParadigm extends SimpleOstravaParadigm implements
+	MultipleHostParadigm
+{
 
 	@Parameter
 	private DatasetIOService ioService;
@@ -36,6 +39,7 @@ public class FSTRPCParadigm extends SimpleOstravaParadigm {
 
 	private List<String> hosts = new LinkedList<>();
 
+	@Override
 	public void setHosts(final Collection<Host> hosts) {
 		this.hosts.clear();
 		this.hosts.addAll(hosts.stream().map(Host::getName).collect(

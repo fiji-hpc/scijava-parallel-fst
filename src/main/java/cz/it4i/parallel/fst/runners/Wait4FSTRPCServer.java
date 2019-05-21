@@ -11,7 +11,9 @@ import org.nustaq.serialization.FSTConfiguration;
 import cz.it4i.parallel.Routines;
 import cz.it4i.parallel.SciJavaParallelRuntimeException;
 import cz.it4i.parallel.fst.server.EchoRunnable;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 class Wait4FSTRPCServer {
 
 	private static long waitTimeout = 200;
@@ -47,6 +49,7 @@ class Wait4FSTRPCServer {
 
 				try (InputStream is = soc.getInputStream()) {
 					EchoRunnable result = (EchoRunnable) config.decodeFromStream(is);
+					log.info("Received hello with :" + str);
 					return result.getOut().equals(str);
 				}
 

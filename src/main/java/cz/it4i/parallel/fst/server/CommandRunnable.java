@@ -6,9 +6,7 @@ import java.util.concurrent.ExecutionException;
 
 import cz.it4i.parallel.SciJavaParallelRuntimeException;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class CommandRunnable implements Runnable, Serializable,
 	ClientOfCommandExecutor
 {
@@ -34,7 +32,6 @@ public class CommandRunnable implements Runnable, Serializable,
 	public synchronized void run() {
 
 		if (!ranRemotely) {
-			log.info("Running: " + command);
 			try {
 				inOut = executor.run(command, inOut);
 			}
