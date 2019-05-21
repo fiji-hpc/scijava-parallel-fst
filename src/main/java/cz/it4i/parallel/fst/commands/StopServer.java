@@ -35,7 +35,8 @@ import cz.it4i.parallel.fst.server.FSTRPCServer;
 /**
  * Stops the FSTRPC Server, if one is running.
  */
-@Plugin(type = Command.class, menuPath = "Plugins > Utilities > Stop Server")
+@Plugin(type = Command.class,
+	menuPath = "Plugins > Utilities > Stop FST RPC Server")
 public class StopServer implements Command {
 
 	@Parameter
