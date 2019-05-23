@@ -2,6 +2,7 @@ package cz.it4i.parallel.fst.utils;
 
 import java.util.List;
 
+import org.scijava.Context;
 import org.scijava.parallel.ParallelizationParadigm;
 
 import cz.it4i.parallel.RunningRemoteServer;
@@ -18,6 +19,11 @@ public class RemoteTestParadigm extends TestParadigm implements
 		ParallelizationParadigm paradigm)
 	{
 		super(runner, paradigm);
+		this.server = runner;
+	}
+
+	public RemoteTestParadigm(ServerRunner runner, Context context) {
+		super(runner, context);
 		this.server = runner;
 	}
 

@@ -1,5 +1,5 @@
 
-package test;
+package cz.it4i.parallel.fst;
 
 import static cz.it4i.parallel.Routines.runWithExceptionHandling;
 
@@ -25,6 +25,14 @@ import org.scijava.parallel.ParallelizationParadigm;
 import cz.it4i.parallel.Routines;
 import cz.it4i.parallel.fst.utils.TestFSTRPCParadigm;
 
+/**
+ * Demonstration example showing basic usage of ParalellizationParadigm with
+ * FSTRPC server started in local system. It downloads a picture (Lena) and
+ * rotate it for 170 and 340 degree. Result is stored into directory 'output'
+ * located in working directory.
+ * 
+ * @author koz01
+ */
 public class RotateFile {
 
 	private static final String OUTPUT_DIRECTORY = "output";
