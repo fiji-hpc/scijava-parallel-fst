@@ -22,6 +22,8 @@ import cz.it4i.parallel.utils.TestParadigm;
 
 public class TestFSTRPCParadigm {
 
+	private TestFSTRPCParadigm() {}
+
 	public static ParallelizationParadigm runner(ServerRunner runner,
 		Context context)
 	{
