@@ -88,14 +88,7 @@
 			<groupId>net.imagej</groupId>
 			<artifactId>imagej</artifactId>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/loci/scifio -->
-		<!-- https://mvnrepository.com/artifact/loci/scifio -->
-		<dependency>
-			<groupId>loci</groupId>
-			<artifactId>scifio</artifactId>
-			<version>4.4.9</version>
-		</dependency>
-
+		
 		<dependency>
 			<groupId>org.scijava</groupId>
 			<artifactId>scijava-parallel</artifactId>
