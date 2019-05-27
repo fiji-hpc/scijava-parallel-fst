@@ -18,10 +18,10 @@ import org.scijava.plugin.PluginService;
 import cz.it4i.parallel.ImageJServerParadigm.Host;
 import cz.it4i.parallel.MultipleHostParadigm;
 import cz.it4i.parallel.ParallelWorker;
-import cz.it4i.parallel.SimpleOstravaParadigm;
+import cz.it4i.parallel.AbstractBaseParadigm;
 
 @Plugin(type = ParallelizationParadigm.class)
-public class FSTRPCParadigm extends SimpleOstravaParadigm implements
+public class FSTRPCParadigm extends AbstractBaseParadigm implements
 	MultipleHostParadigm
 {
 
