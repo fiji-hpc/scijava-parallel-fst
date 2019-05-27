@@ -57,7 +57,8 @@ public class DatasetSerializer implements ParallelizationParadigmSerializer {
 
 	@Override
 	public Object readObject(Class<?> objectClass, ObjectInput objectInput)
-		throws Exception
+		throws IOException
+
 	{
 		String name = objectInput.readUTF();
 		String id = UUID.randomUUID().toString() + "_" + name;

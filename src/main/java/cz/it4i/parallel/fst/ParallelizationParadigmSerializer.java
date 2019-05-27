@@ -11,7 +11,7 @@ public interface ParallelizationParadigmSerializer extends SciJavaPlugin {
 
 	void writeObject(Object obj, ObjectOutput output) throws IOException;
 
-	Object readObject(Class<?> objectClass, ObjectInput input) throws Exception;
+	Object readObject(Class<?> objectClass, ObjectInput input) throws IOException;
 
 	Class<?> getSerializedClass();
 

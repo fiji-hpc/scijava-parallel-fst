@@ -38,7 +38,7 @@ public class RandomAccessibleIntervalSerializer implements
 
 	@Override
 	public Object readObject(Class<?> objectClass, ObjectInput objectInput)
-		throws Exception
+		throws IOException
 	{
 		return RandomAccessibleIntervalStreamer.read(new InputStreamObjectInput(
 			objectInput));
