@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import cz.it4i.parallel.ImageJServerRunner;
+import cz.it4i.parallel.runners.ImageJServerRunner;
 
 public class FSTRPCServerRunner extends ImageJServerRunner {
 

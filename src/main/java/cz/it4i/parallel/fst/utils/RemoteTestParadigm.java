@@ -6,7 +6,7 @@ import org.scijava.Context;
 import org.scijava.parallel.ParallelizationParadigm;
 
 import cz.it4i.parallel.RunningRemoteServer;
-import cz.it4i.parallel.ServerRunner;
+import cz.it4i.parallel.runners.ServerRunner;
 import cz.it4i.parallel.utils.TestParadigm;
 
 public class RemoteTestParadigm extends TestParadigm implements

@@ -10,13 +10,12 @@ import org.scijava.parallel.ParallelService;
 import org.scijava.parallel.ParallelizationParadigm;
 import org.scijava.parallel.ParallelizationParadigmProfile;
 
-import cz.it4i.parallel.ImageJServerParadigm;
-import cz.it4i.parallel.ImageJServerParadigm.Host;
-import cz.it4i.parallel.ServerRunner;
+import cz.it4i.parallel.Host;
 import cz.it4i.parallel.fst.FSTRPCParadigm;
 import cz.it4i.parallel.fst.runners.FSTRPCServerRunner;
 import cz.it4i.parallel.fst.runners.HPCFSTRPCServerRunnerUI;
 import cz.it4i.parallel.fst.runners.InProcessFSTRPCServerRunner;
+import cz.it4i.parallel.runners.ServerRunner;
 import cz.it4i.parallel.ui.HPCSettingsGui;
 import cz.it4i.parallel.utils.TestParadigm;
 
@@ -55,7 +54,7 @@ public class TestFSTRPCParadigm {
 	{
 		runner.start();
 		List<Host> hosts = Streams.zip(runner.getPorts().stream(), runner
-			.getNCores().stream(), (port, nCores) -> new ImageJServerParadigm.Host(
+			.getNCores().stream(), (port, nCores) -> new Host(
 				"localhost:" + port, nCores)).collect(Collectors.toList());
 		return configureParadigm(context.service(ParallelService.class), hosts);
 	}

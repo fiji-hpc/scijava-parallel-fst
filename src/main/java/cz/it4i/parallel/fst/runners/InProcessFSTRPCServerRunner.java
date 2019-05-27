@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.scijava.Context;
 
-import cz.it4i.parallel.ServerRunner;
 import cz.it4i.parallel.fst.server.FSTRPCServer;
+import cz.it4i.parallel.runners.ServerRunner;
 
 public class InProcessFSTRPCServerRunner implements ServerRunner {
 

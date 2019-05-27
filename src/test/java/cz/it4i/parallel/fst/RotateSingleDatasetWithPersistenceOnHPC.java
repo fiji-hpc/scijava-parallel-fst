@@ -25,11 +25,11 @@ import org.scijava.parallel.PersistentParallelizationParadigm;
 import org.scijava.parallel.PersistentParallelizationParadigm.CompletableFutureID;
 import org.scijava.ui.UIService;
 
-import cz.it4i.parallel.HPCImageJServerRunner;
 import cz.it4i.parallel.HPCSettings;
 import cz.it4i.parallel.fst.runners.HPCFSTRPCServerRunnerUI;
 import cz.it4i.parallel.fst.utils.TestFSTRPCParadigm;
 import cz.it4i.parallel.persistence.PersistentParallelizationParadigmImpl;
+import cz.it4i.parallel.runners.HPCImageJServerRunner;
 import cz.it4i.parallel.ui.HPCSettingsGui;
 import lombok.extern.slf4j.Slf4j;
 
