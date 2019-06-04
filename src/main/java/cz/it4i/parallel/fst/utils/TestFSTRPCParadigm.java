@@ -23,13 +23,13 @@ public class TestFSTRPCParadigm {
 
 	private TestFSTRPCParadigm() {}
 
-	public static ParallelizationParadigm runner(ServerRunner runner,
+	public static RemoteTestParadigm runner(ServerRunner runner,
 		Context context)
 	{
 		return new RemoteTestParadigm(runner, initParadigm(runner, context));
 	}
 
-	public static ParallelizationParadigm hpcFSTRPCServer(
+	public static RemoteTestParadigm hpcFSTRPCServer(
 		Context context)
 	{
 		ServerRunner runner = new HPCFSTRPCServerRunnerUI(HPCSettingsGui.showDialog(

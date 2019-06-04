@@ -4,10 +4,14 @@ package cz.it4i.parallel.fst.runners;
 import java.util.Arrays;
 import java.util.List;
 
-import cz.it4i.parallel.HPCSettings;
+import cz.it4i.parallel.runners.HPCSettings;
 import cz.it4i.parallel.ui.HPCImageJServerRunnerWithUI;
 
 public class HPCFSTRPCServerRunnerUI extends HPCImageJServerRunnerWithUI {
+
+	public HPCFSTRPCServerRunnerUI(HPCSettings settings) {
+		super(settings);
+	}
 
 	public HPCFSTRPCServerRunnerUI(HPCSettings settings, boolean shutdownOnClose) {
 		super(settings, shutdownOnClose);
