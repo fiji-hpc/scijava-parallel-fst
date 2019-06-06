@@ -11,10 +11,10 @@
 	</parent>
 	<artifactId>scijava-parallel-fst</artifactId>
 	<version>3.0.0-SNAPSHOT</version>
-	<name>SciJava Parallel Examples</name>
+	<name>Implementation of SciJava Parallel using RPC with FST</name>
 	<description>Parallelization framework for SciJava applications.</description>
-	<url>https://github.com/maarzt/scijava-parallel-examples</url>
-	<inceptionYear>2018</inceptionYear>
+	<url>https://github.com/fiji-hpc/scijava-parallel-fst</url>
+	<inceptionYear>2019</inceptionYear>
 	<organization>
 		<name>SciJava</name>
 		<url>https://scijava.org/</url>
