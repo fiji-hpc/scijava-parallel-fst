@@ -10,7 +10,7 @@
 		<relativePath />
 	</parent>
 	<artifactId>scijava-parallel-fst</artifactId>
-	<version>3.0.0-SNAPSHOT</version>
+	<version>3.0.0</version>
 	<name>Implementation of SciJava Parallel using RPC with FST</name>
 	<description>Parallelization framework for SciJava applications.</description>
 	<url>https://github.com/fiji-hpc/scijava-parallel-fst</url>
@@ -74,12 +74,12 @@
 
 	<repositories>
 		<repository>
-			<id>imagej.public</id>
-			<url>http://maven.imagej.net/content/groups/public</url>
-		</repository>
-		<repository>
 			<id>it4i</id>
 			<url>https://artifactory.cs.vsb.cz/it4i/</url>
+		</repository>
+		<repository>
+			<id>imagej.public</id>
+			<url>http://maven.imagej.net/content/groups/public</url>
 		</repository>
 	</repositories>
 
@@ -92,7 +92,7 @@
 		<dependency>
 			<groupId>org.scijava</groupId>
 			<artifactId>scijava-parallel</artifactId>
-			<version>6.0.0-SNAPSHOT</version>
+			<version>6.0.0</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.slf4j</groupId>
@@ -129,7 +129,7 @@
 		<dependency>
 			<groupId>de.mpicbg.ulman</groupId>
 			<artifactId>imglib2Stream</artifactId>
-			<version>1.1.0-SNAPSHOT</version>
+			<version>1.1.0</version>
 		</dependency>
 	</dependencies>
 	<distributionManagement>
