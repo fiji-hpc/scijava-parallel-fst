@@ -23,6 +23,11 @@ public class HPCFSTRPCServerRunnerUI extends HPCImageJServerRunnerWithUI {
 
 
 	@Override
+	protected String getServerName() {
+		return "RPC-FST server";
+	}
+
+	@Override
 	protected List<String> getParameters() {
 		return FSTPRPC_SERVER_PARAMETERS;
 	}
