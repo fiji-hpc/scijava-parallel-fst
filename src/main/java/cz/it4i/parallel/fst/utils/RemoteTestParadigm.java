@@ -35,11 +35,18 @@ public class RemoteTestParadigm extends TestParadigm implements
 
 	@Override
 	public List<Integer> getRemotePorts() {
+		if (server instanceof RunningRemoteServer) {
+			return ((RunningRemoteServer) server).getRemotePorts();
+
+		}
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public List<String> getRemoteHosts() {
+		if (server instanceof RunningRemoteServer) {
+			return ((RunningRemoteServer) server).getRemoteHosts();
+		}
 		throw new UnsupportedOperationException();
 	}
 
