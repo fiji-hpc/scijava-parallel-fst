@@ -15,6 +15,8 @@ import cz.it4i.parallel.fst.FSTRPCParadigm;
 import cz.it4i.parallel.fst.runners.FSTRPCServerRunner;
 import cz.it4i.parallel.fst.runners.HPCFSTRPCServerRunnerUI;
 import cz.it4i.parallel.fst.runners.InProcessFSTRPCServerRunner;
+import cz.it4i.parallel.runners.ImageJServerRunnerSettings;
+import cz.it4i.parallel.runners.RunnerSettings;
 import cz.it4i.parallel.runners.ServerRunner;
 import cz.it4i.parallel.ui.HPCSettingsGui;
 import cz.it4i.parallel.utils.TestParadigm;
@@ -23,7 +25,8 @@ public class TestFSTRPCParadigm {
 
 	private TestFSTRPCParadigm() {}
 
-	public static RemoteTestParadigm runner(ServerRunner runner,
+	public static RemoteTestParadigm runner(
+		ServerRunner<? extends RunnerSettings> runner,
 		Context context)
 	{
 		return new RemoteTestParadigm(runner, initParadigm(runner, context));
@@ -32,24 +35,30 @@ public class TestFSTRPCParadigm {
 	public static RemoteTestParadigm hpcFSTRPCServer(
 		Context context)
 	{
-		ServerRunner runner = new HPCFSTRPCServerRunnerUI(HPCSettingsGui.showDialog(
-			context), true);
+		ServerRunner<? extends RunnerSettings> runner = new HPCFSTRPCServerRunnerUI(
+			HPCSettingsGui.showDialog(
+			context));
 		return new RemoteTestParadigm(runner, initParadigm(runner, context));
 	}
 
 	public static ParallelizationParadigm inProcessFSTRPCServer(Context context) {
-		ServerRunner runner = new InProcessFSTRPCServerRunner(context);
+		ServerRunner<? extends RunnerSettings> runner =
+			new InProcessFSTRPCServerRunner(context);
 		return new TestParadigm(runner, initParadigm(runner, context));
 	}
 
 	public static ParallelizationParadigm localFSTRPCServer(String fijiPath,
 		Context context)
 	{
-		ServerRunner runner = new FSTRPCServerRunner(fijiPath, true);
+		FSTRPCServerRunner runner = new FSTRPCServerRunner();
+		ImageJServerRunnerSettings settings = ImageJServerRunnerSettings.builder()
+			.fiji(fijiPath).build();
+		runner.init(settings);
 		return new TestParadigm(runner, initParadigm(runner, context));
 	}
 
-	private static ParallelizationParadigm initParadigm(ServerRunner runner,
+	private static ParallelizationParadigm initParadigm(
+		ServerRunner<? extends RunnerSettings> runner,
 		Context context)
 	{
 		runner.start();

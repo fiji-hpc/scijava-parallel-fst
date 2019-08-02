@@ -17,10 +17,10 @@ public class RemoteTestParadigm extends TestParadigm implements
 	RunningRemoteServer, MultipleHostParadigm
 {
 
-	private ServerRunner server;
+	private ServerRunner<?> server;
 	private ParallelizationParadigm paradigm;
 
-	public RemoteTestParadigm(ServerRunner runner,
+	public RemoteTestParadigm(ServerRunner<?> runner,
 		ParallelizationParadigm paradigm)
 	{
 		super(runner, paradigm);
@@ -28,7 +28,7 @@ public class RemoteTestParadigm extends TestParadigm implements
 		this.paradigm = paradigm;
 	}
 
-	public RemoteTestParadigm(ServerRunner runner, Context context) {
+	public RemoteTestParadigm(ServerRunner<?> runner, Context context) {
 		super(runner, context);
 		this.server = runner;
 	}

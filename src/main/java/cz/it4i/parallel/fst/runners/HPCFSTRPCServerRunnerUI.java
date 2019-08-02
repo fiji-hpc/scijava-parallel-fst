@@ -9,12 +9,11 @@ import cz.it4i.parallel.ui.HPCImageJServerRunnerWithUI;
 
 public class HPCFSTRPCServerRunnerUI extends HPCImageJServerRunnerWithUI {
 
-	public HPCFSTRPCServerRunnerUI(HPCSettings settings) {
-		super(settings);
+	public HPCFSTRPCServerRunnerUI() {
 	}
 
-	public HPCFSTRPCServerRunnerUI(HPCSettings settings, boolean shutdownOnClose) {
-		super(settings, shutdownOnClose);
+	public HPCFSTRPCServerRunnerUI(HPCSettings settings) {
+		super(settings);
 	}
 
 	static final List<String> FSTPRPC_SERVER_PARAMETERS = Arrays.asList(
@@ -33,7 +32,7 @@ public class HPCFSTRPCServerRunnerUI extends HPCImageJServerRunnerWithUI {
 	}
 
 	@Override
-	protected void waitForImageJServer(Integer port) {
+	protected void waitForServer(Integer port) {
 		Wait4FSTRPCServer.doIi(port);
 	}
 

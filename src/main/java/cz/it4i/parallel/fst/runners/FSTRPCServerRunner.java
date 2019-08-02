@@ -13,11 +13,6 @@ public class FSTRPCServerRunner extends ImageJServerRunner {
 		"-Dimagej.legacy.modernOnlyCommands=true", "--", "--ij2", "--headless",
 		"--fstrpcserver");
 
-	public FSTRPCServerRunner(String fiji, boolean shutdownOnClose) {
-		super(fiji, shutdownOnClose);
-	}
-
-
 	@Override
 	public List<Integer> getPorts() {
 		return Collections.singletonList(9090);
@@ -29,7 +24,7 @@ public class FSTRPCServerRunner extends ImageJServerRunner {
 	}
 
 	@Override
-	protected void waitForImageJServer(Integer port) {
+	protected void waitForServer(Integer port) {
 		Wait4FSTRPCServer.doIi(port);
 	}
 
