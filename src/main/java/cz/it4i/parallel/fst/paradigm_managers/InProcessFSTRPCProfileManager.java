@@ -8,6 +8,7 @@ import org.scijava.plugin.Plugin;
 import cz.it4i.parallel.fst.FSTRPCParadigm;
 import cz.it4i.parallel.fst.runners.InProcessFSTRPCServerRunner;
 import cz.it4i.parallel.runners.MultipleHostsParadigmManagerUsingRunner;
+import cz.it4i.parallel.runners.ParadigmProfileUsingRunner;
 import cz.it4i.parallel.runners.RunnerSettings;
 import cz.it4i.parallel.runners.ServerRunner;
 
@@ -25,6 +26,14 @@ public class InProcessFSTRPCProfileManager extends
 	}
 
 
+	@Override
+	protected boolean editSettings(
+		ParadigmProfileUsingRunner<RunnerSettings> typedProfile)
+	{
+		// It does not have any setting so it should always return true:
+		return true;
+	}
+	
 	@Override
 	protected Class<InProcessFSTRPCServerRunner> getTypeOfRunner() {
 		return InProcessFSTRPCServerRunner.class;
