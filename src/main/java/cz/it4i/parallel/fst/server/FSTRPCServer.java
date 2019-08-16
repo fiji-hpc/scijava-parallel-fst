@@ -85,38 +85,29 @@ public class FSTRPCServer {
 
 	private void handleConnection(FSTConfiguration config, Socket s) {
 		try (Socket localS = s) {
-			OutputStream os = localS.getOutputStream();
-			InputStream is = localS.getInputStream();
-			Object obj;
-			while (null != (obj = readObject(config, is))) {
-				if (obj instanceof ClientOfCommandExecutor) {
-					ClientOfCommandExecutor ce = (ClientOfCommandExecutor) obj;
-					ce.setCommandExecutor((commandName, input) -> {
-						try {
-							return commandService.run(commandName, false, input).get()
-								.getOutputs();
-						}
-						catch (InterruptedException exc) {
-							log.warn(exc.getMessage(), exc);
-							Thread.currentThread().interrupt();
-							return Collections.emptyMap();
-						}
-					});
-				}
+			try (OutputStream os = localS.getOutputStream();
+					InputStream is = localS.getInputStream())
+			{
+				Object obj;
+				while (null != (obj = readObject(config, is))) {
+					if (obj instanceof ClientOfCommandExecutor) {
+						ClientOfCommandExecutor ce = (ClientOfCommandExecutor) obj;
+						ce.setCommandExecutor((commandName, input) -> {
+							try {
+								return commandService.run(commandName, false, input).get()
+									.getOutputs();
+							}
+							catch (InterruptedException exc) {
+								log.warn(exc.getMessage(), exc);
+								Thread.currentThread().interrupt();
+								return Collections.emptyMap();
+							}
+						});
+					}
 
-				Runnable run = (Runnable) obj;
-				run.run();
-				try {
-					config.encodeToStream(os, run);
-					os.flush();
-				}
-				catch (SocketException exc) {
-					if (exc.getMessage().contains("Broken pipe")) {
-						log.info("connection closed");
-					}
-					else {
-						throw exc;
-					}
+					Runnable run = (Runnable) obj;
+					run.run();
+					sendResult(config, os, run);
 				}
 			}
 		}
@@ -134,6 +125,22 @@ public class FSTRPCServer {
 		}
 		catch (EOFException e) {
 			return null;
+		}
+	}
+
+	private void sendResult(FSTConfiguration config, OutputStream os,
+		Runnable run) throws IOException
+	{
+		try {
+			config.encodeToStream(os, run);
+		}
+		catch (SocketException exc) {
+			if (exc.getMessage().contains("Broken pipe")) {
+				log.info("connection closed");
+			}
+			else {
+				throw exc;
+			}
 		}
 	}
 }
