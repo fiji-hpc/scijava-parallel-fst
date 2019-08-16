@@ -10,6 +10,8 @@ public class EchoRunnable implements Runnable, Serializable
 {
 
 
+	private static final long serialVersionUID = -6276734570857266755L;
+
 	private boolean ranRemotely;
 	private String in;
 

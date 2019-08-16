@@ -11,6 +11,8 @@ public class CommandRunnable implements Runnable, Serializable,
 	ClientOfCommandExecutor
 {
 
+	private static final long serialVersionUID = 4095916278904913213L;
+
 	private String command;
 
 	@Getter
