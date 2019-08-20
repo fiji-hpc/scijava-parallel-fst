@@ -1,6 +1,7 @@
 package cz.it4i.parallel.fst.paradigm_managers;
 
 import org.scijava.Context;
+import org.scijava.parallel.HavingOwnerWindow;
 import org.scijava.parallel.ParadigmManager;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
@@ -11,7 +12,6 @@ import cz.it4i.parallel.runners.HPCSettings;
 import cz.it4i.parallel.runners.MultipleHostsParadigmManagerUsingRunner;
 import cz.it4i.parallel.runners.ServerRunner;
 import cz.it4i.parallel.ui.HPCImageJServerRunnerWithUI;
-import cz.it4i.parallel.ui.HavingOwnerWindow;
 import javafx.stage.Window;
 
 @Plugin(type = ParadigmManager.class)
