@@ -41,7 +41,14 @@ public class InProcessFSTRPCProfileManager extends
 
 	@Override
 	protected void initRunner(ServerRunner<?> runner) {
-		context.inject(runner);
+		if (runner instanceof InProcessFSTRPCServerRunner) {
+			InProcessFSTRPCServerRunner typedRunner =
+				(InProcessFSTRPCServerRunner) runner;
+			if (!typedRunner.isInitialized()) {
+				context.inject(typedRunner);
+			}
+		}
+
 	}
 
 	@Override

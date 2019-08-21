@@ -30,6 +30,10 @@ public class InProcessFSTRPCServerRunner implements
 		this.ctx = ctx;
 	}
 
+	public boolean isInitialized() {
+		return ctx != null;
+	}
+
 	@Override
 	public InProcessFSTRPCServerRunner init(RunnerSettings settings) {
 		return this;
