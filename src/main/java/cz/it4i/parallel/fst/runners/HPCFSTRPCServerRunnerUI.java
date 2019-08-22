@@ -8,7 +8,7 @@ public class HPCFSTRPCServerRunnerUI extends HPCImageJRunnerWithUI {
 	public HPCFSTRPCServerRunnerUI()
 	{
 		super(FSTRPCServerRunner.FSTPRPC_SERVER_PARAMETERS, Wait4FSTRPCServer::doIt,
-			9090);
+			FSTRPCServerRunner.PORT_NUMBER);
 	}
 
 	@Override
