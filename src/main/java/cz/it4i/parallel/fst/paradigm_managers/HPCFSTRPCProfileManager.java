@@ -10,7 +10,7 @@ import cz.it4i.parallel.fst.runners.HPCFSTRPCServerRunnerUI;
 import cz.it4i.parallel.runners.HPCSettings;
 import cz.it4i.parallel.runners.MultipleHostsParadigmManagerUsingRunner;
 import cz.it4i.parallel.runners.ServerRunner;
-import cz.it4i.parallel.ui.HPCImageJServerRunnerWithUI;
+import cz.it4i.parallel.ui.HPCImageJRunnerWithUI;
 import cz.it4i.parallel.ui.HavingOwnerWindow;
 import javafx.stage.Window;
 
@@ -52,8 +52,8 @@ public class HPCFSTRPCProfileManager extends
 
 	@Override
 	protected void initRunner(ServerRunner<?> runner) {
-		HPCImageJServerRunnerWithUI typedRunner =
-			(HPCImageJServerRunnerWithUI) runner;
+		HPCImageJRunnerWithUI typedRunner =
+			(HPCImageJRunnerWithUI) runner;
 		typedRunner.initOwnerWindow(ownerWindow);
 	}
 }

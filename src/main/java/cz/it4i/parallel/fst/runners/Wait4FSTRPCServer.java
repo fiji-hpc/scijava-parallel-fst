@@ -20,7 +20,7 @@ class Wait4FSTRPCServer {
 
 	private Wait4FSTRPCServer() {}
 
-	public static void doIi(Integer port) {
+	public static void doIt(Integer port) {
 
 		while (true) {
 			try {

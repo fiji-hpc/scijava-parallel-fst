@@ -44,7 +44,7 @@ public class InProcessFSTRPCServerRunner implements
 		server = new FSTRPCServer(ctx);
 		status = Status.ACTIVE;
 		server.run();
-		getPorts().parallelStream().forEach(Wait4FSTRPCServer::doIi);
+		getPorts().parallelStream().forEach(Wait4FSTRPCServer::doIt);
 	}
 
 	@Override

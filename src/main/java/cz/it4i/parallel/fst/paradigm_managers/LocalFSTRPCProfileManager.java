@@ -7,12 +7,12 @@ import org.scijava.plugin.Plugin;
 
 import cz.it4i.parallel.fst.FSTRPCParadigm;
 import cz.it4i.parallel.fst.runners.FSTRPCServerRunner;
-import cz.it4i.parallel.runners.ImageJServerRunnerSettings;
+import cz.it4i.parallel.runners.LocalImageJRunnerSettings;
 import cz.it4i.parallel.runners.MultipleHostsParadigmManagerUsingRunner;
 
 @Plugin(type = ParadigmManager.class)
 public class LocalFSTRPCProfileManager extends
-	MultipleHostsParadigmManagerUsingRunner<FSTRPCParadigm, ImageJServerRunnerSettings>
+	MultipleHostsParadigmManagerUsingRunner<FSTRPCParadigm, LocalImageJRunnerSettings>
 {
 
 	@Parameter

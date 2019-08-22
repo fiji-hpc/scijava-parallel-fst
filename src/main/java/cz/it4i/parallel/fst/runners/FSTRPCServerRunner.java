@@ -5,13 +5,17 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import cz.it4i.parallel.runners.ImageJServerRunner;
+import cz.it4i.parallel.runners.LocalImageJRunner;
 
-public class FSTRPCServerRunner extends ImageJServerRunner {
+public class FSTRPCServerRunner extends LocalImageJRunner {
 
 	static final List<String> FSTPRPC_SERVER_PARAMETERS = Arrays.asList(
 		"-Dimagej.legacy.modernOnlyCommands=true", "--", "--ij2", "--headless",
 		"--fstrpcserver");
+
+	public FSTRPCServerRunner() {
+		super(FSTPRPC_SERVER_PARAMETERS, Wait4FSTRPCServer::doIt);
+	}
 
 	@Override
 	public List<Integer> getPorts() {
@@ -21,11 +25,6 @@ public class FSTRPCServerRunner extends ImageJServerRunner {
 	@Override
 	protected List<String> getParameters() {
 		return FSTPRPC_SERVER_PARAMETERS;
-	}
-
-	@Override
-	protected void waitForServer(Integer port) {
-		Wait4FSTRPCServer.doIi(port);
 	}
 
 }
