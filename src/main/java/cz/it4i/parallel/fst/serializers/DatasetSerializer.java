@@ -33,8 +33,9 @@ public class DatasetSerializer implements ParallelizationParadigmSerializer {
 		throws IOException
 	{
 		Dataset dataset = (Dataset) toWrite;
-		out.writeUTF(dataset.getName());
-		String id = UUID.randomUUID().toString() + "_" + dataset.getName();
+		String name = getName(dataset);
+		out.writeUTF(name);
+		String id = UUID.randomUUID().toString() + "_" + name;
 		ByteArrayHandle bh = new ByteArrayHandle();
 		locationService.mapFile(id, bh);
 		ioService.save(dataset, id);
@@ -48,6 +49,14 @@ public class DatasetSerializer implements ParallelizationParadigmSerializer {
 			pointer += toRead;
 		}
 		bh.close();
+	}
+
+	private String getName(Dataset dataset) {
+		String result = dataset.getName();
+		if (result == null) {
+			result = UUID.randomUUID().toString() + ".png";
+		}
+		return result;
 	}
 
 	@Override
