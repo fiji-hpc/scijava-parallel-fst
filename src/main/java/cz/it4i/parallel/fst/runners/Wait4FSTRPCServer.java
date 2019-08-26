@@ -39,7 +39,7 @@ class Wait4FSTRPCServer {
 		}
 	}
 
-	static private boolean checkPort(Integer port) throws Exception {
+	private static boolean checkPort(Integer port) throws Exception {
 		final FSTConfiguration config = FSTConfiguration
 			.createDefaultConfiguration();
 		try (Socket soc = new Socket("localhost", port)) {
