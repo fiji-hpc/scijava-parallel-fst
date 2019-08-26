@@ -1,6 +1,6 @@
 package cz.it4i.parallel.fst;
 
-import static cz.it4i.parallel.Routines.rethrowAsUnchecked;
+import static cz.it4i.parallel.InternalExceptionRoutines.rethrowAsUnchecked;
 
 import java.io.InputStream;
 import java.io.OutputStream;

@@ -1,5 +1,7 @@
 package cz.it4i.parallel.fst.runners;
 
+import static cz.it4i.parallel.InternalExceptionRoutines.runWithExceptionHandling;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -8,7 +10,6 @@ import java.util.UUID;
 
 import org.nustaq.serialization.FSTConfiguration;
 
-import cz.it4i.parallel.Routines;
 import cz.it4i.parallel.SciJavaParallelRuntimeException;
 import cz.it4i.parallel.fst.server.EchoRunnable;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,7 @@ class Wait4FSTRPCServer {
 				if (checkPort(port)) {
 					break;
 				}
-				Routines.runWithExceptionHandling(() -> Thread.sleep(waitTimeout));
+				runWithExceptionHandling(() -> Thread.sleep(waitTimeout));
 			}
 			catch (IOException exc) {
 				// ignore

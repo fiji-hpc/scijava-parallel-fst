@@ -1,6 +1,8 @@
 
 package cz.it4i.parallel.fst.server;
 
+import static cz.it4i.parallel.InternalExceptionRoutines.runWithExceptionHandling;
+import static cz.it4i.parallel.InternalExceptionRoutines.supplyWithExceptionHandling;
 import static cz.it4i.parallel.fst.FSTRPCParadigm.createConfigWithRegisteredSerializers;
 
 import java.io.EOFException;
@@ -21,7 +23,6 @@ import org.scijava.command.CommandService;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.PluginService;
 
-import cz.it4i.parallel.Routines;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -50,9 +51,9 @@ public class FSTRPCServer {
 		}
 		log.info("Starting FSTRPC server");
 		es = Executors.newCachedThreadPool();
-		serverSocket = Routines.supplyWithExceptionHandling(() -> new ServerSocket(
+		serverSocket = supplyWithExceptionHandling(() -> new ServerSocket(
 			9090));
-		mainThread = new Thread(() -> Routines.runWithExceptionHandling(
+		mainThread = new Thread(() -> runWithExceptionHandling(
 			this::handleServerSocket));
 		mainThread.start();
 		log.info("FSTRPC server started");
@@ -61,7 +62,7 @@ public class FSTRPCServer {
 	public void stop() {
 		mainThread.interrupt();
 		es.shutdown();
-		Routines.runWithExceptionHandling(() -> serverSocket.close());
+		runWithExceptionHandling(() -> serverSocket.close());
 		log.info("FSTRPC server stopped");
 	}
 
