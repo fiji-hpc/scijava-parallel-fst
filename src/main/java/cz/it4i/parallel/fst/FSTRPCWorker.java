@@ -1,6 +1,6 @@
 package cz.it4i.parallel.fst;
 
-import static cz.it4i.parallel.InternalExceptionRoutines.rethrowAsUnchecked;
+import static cz.it4i.parallel.internal.InternalExceptionRoutines.rethrowAsUnchecked;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -9,8 +9,8 @@ import java.util.Map;
 
 import org.nustaq.serialization.FSTConfiguration;
 
-import cz.it4i.parallel.ParallelWorker;
 import cz.it4i.parallel.fst.server.CommandRunnable;
+import cz.it4i.parallel.internal.ParallelWorker;
 
 
 public class FSTRPCWorker implements ParallelWorker {

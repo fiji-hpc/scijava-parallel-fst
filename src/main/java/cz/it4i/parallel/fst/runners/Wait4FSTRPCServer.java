@@ -1,6 +1,6 @@
 package cz.it4i.parallel.fst.runners;
 
-import static cz.it4i.parallel.InternalExceptionRoutines.runWithExceptionHandling;
+import static cz.it4i.parallel.internal.InternalExceptionRoutines.runWithExceptionHandling;
 
 import java.io.IOException;
 import java.io.InputStream;

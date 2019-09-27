@@ -10,8 +10,8 @@ import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 import org.scijava.plugin.PluginService;
 
-import cz.it4i.parallel.AbstractMultipleHostParadigm;
-import cz.it4i.parallel.ParallelWorker;
+import cz.it4i.parallel.internal.AbstractMultipleHostParadigm;
+import cz.it4i.parallel.internal.ParallelWorker;
 
 @Plugin(type = ParallelizationParadigm.class)
 public class FSTRPCParadigm extends AbstractMultipleHostParadigm

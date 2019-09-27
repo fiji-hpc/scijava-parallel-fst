@@ -1,8 +1,8 @@
 
 package cz.it4i.parallel.fst.server;
 
-import static cz.it4i.parallel.InternalExceptionRoutines.runWithExceptionHandling;
-import static cz.it4i.parallel.InternalExceptionRoutines.supplyWithExceptionHandling;
+import static cz.it4i.parallel.internal.InternalExceptionRoutines.runWithExceptionHandling;
+import static cz.it4i.parallel.internal.InternalExceptionRoutines.supplyWithExceptionHandling;
 import static cz.it4i.parallel.fst.FSTRPCParadigm.createConfigWithRegisteredSerializers;
 
 import java.io.EOFException;
