@@ -7,11 +7,11 @@ import org.scijava.plugin.Plugin;
 
 import cz.it4i.parallel.fst.FSTRPCParadigm;
 import cz.it4i.parallel.fst.runners.HPCFSTRPCServerRunnerUI;
-import cz.it4i.parallel.runners.HPCSettings;
-import cz.it4i.parallel.runners.MultipleHostsParadigmManagerUsingRunner;
-import cz.it4i.parallel.runners.ServerRunner;
-import cz.it4i.parallel.ui.HPCImageJRunnerWithUI;
-import cz.it4i.parallel.ui.HavingOwnerWindow;
+import cz.it4i.parallel.paradigm_managers.HPCSettings;
+import cz.it4i.parallel.paradigm_managers.MultipleHostsParadigmManagerUsingRunner;
+import cz.it4i.parallel.paradigm_managers.ServerRunner;
+import cz.it4i.parallel.paradigm_managers.ui.HPCImageJRunnerWithUI;
+import cz.it4i.parallel.paradigm_managers.ui.HavingOwnerWindow;
 import javafx.stage.Window;
 
 @Plugin(type = ParadigmManager.class)

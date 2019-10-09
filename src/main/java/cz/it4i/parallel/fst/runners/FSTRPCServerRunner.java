@@ -4,7 +4,7 @@ package cz.it4i.parallel.fst.runners;
 import java.util.Arrays;
 import java.util.List;
 
-import cz.it4i.parallel.runners.LocalImageJRunner;
+import cz.it4i.parallel.paradigm_managers.LocalImageJRunner;
 
 public class FSTRPCServerRunner extends LocalImageJRunner {
 

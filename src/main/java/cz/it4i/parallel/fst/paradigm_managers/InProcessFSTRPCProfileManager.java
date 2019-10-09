@@ -7,10 +7,10 @@ import org.scijava.plugin.Plugin;
 
 import cz.it4i.parallel.fst.FSTRPCParadigm;
 import cz.it4i.parallel.fst.runners.InProcessFSTRPCServerRunner;
-import cz.it4i.parallel.runners.MultipleHostsParadigmManagerUsingRunner;
-import cz.it4i.parallel.runners.ParadigmProfileUsingRunner;
-import cz.it4i.parallel.runners.RunnerSettings;
-import cz.it4i.parallel.runners.ServerRunner;
+import cz.it4i.parallel.paradigm_managers.MultipleHostsParadigmManagerUsingRunner;
+import cz.it4i.parallel.paradigm_managers.ParadigmProfileUsingRunner;
+import cz.it4i.parallel.paradigm_managers.RunnerSettings;
+import cz.it4i.parallel.paradigm_managers.ServerRunner;
 
 @Plugin(type = ParadigmManager.class)
 public class InProcessFSTRPCProfileManager extends
